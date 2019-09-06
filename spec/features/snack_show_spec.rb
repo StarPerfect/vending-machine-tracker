@@ -12,8 +12,8 @@ RSpec.describe 'Snack Show Page' do
   before :each do
     @denver_vending = Owner.create(name: 'Denver Vending Machines, Inc.')
     @turing = @denver_vending.machines.create(location: 'Turing')
-    @pepsi_center = @denver_vending.machines.create(location: 'Turing')
-    @du = @denver_vending.machines.create(location: 'Turing')
+    @pepsi_center = @denver_vending.machines.create(location: 'Pepsi Center')
+    @du = @denver_vending.machines.create(location: 'University of Denver')
     @poptarts = Snack.create(name: 'Poptarts', price: 2.00)
     @skittles = Snack.create(name: 'Skittles', price: 1.00)
     @turing.snacks << @skittles
@@ -27,5 +27,13 @@ RSpec.describe 'Snack Show Page' do
 
     expect(page).to have_content(@poptarts.name)
     expect(page).to have_content("$2.00")
+  end
+
+  it 'displays locations to find snack' do
+    visit snack_path(@poptarts)
+
+    expect(page).to have_content(@turing.location)
+    expect(page).to have_content(@pepsi_center.location)
+    expect(page).to have_content(@du.location)
   end
 end
