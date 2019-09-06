@@ -19,15 +19,17 @@ RSpec.describe 'Vending Machine Show Page' do
   before :each do
     @denver_vending = Owner.create(name: 'Denver Vending Machines, Inc.')
     @turing = @denver_vending.machines.create(location: 'Turing')
-    @poptarts = @turing.snacks.create(name: 'Poptarts', price: 1.00)
-    @skittles = @turing.snacks.create(name: 'Skittles', price: 1.25)
+    @poptarts = Snack.create(name: 'Poptarts', price: 1.00)
+    @skittles = Snack.create(name: 'Skittles', price: 1.25)
+    @turing.snacks << @skittles
+    @turing.snacks << @poptarts
   end
 
   it 'User sees all snacks and their price' do
     visit machine_path(@turing)
 
-    expect(page). to have_content(@poptart.name)
-    expect(page). to have_content(@poptart.price)
+    expect(page). to have_content(@poptarts.name)
+    expect(page). to have_content(@poptarts.price)
     expect(page). to have_content(@skittles.name)
     expect(page). to have_content(@skittles.price)
   end
