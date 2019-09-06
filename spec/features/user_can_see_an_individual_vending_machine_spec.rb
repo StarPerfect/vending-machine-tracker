@@ -34,4 +34,12 @@ RSpec.describe 'Vending Machine Show Page' do
     expect(page). to have_content(@skittles.price)
     expect(page).to have_content("$1.50")
   end
+# As a visitor
+# When I visit a vending machine show page
+# I also see an average price for all of the snacks in that machine\
+  it 'displays average snack price' do
+    visit machine_path(@turing)
+
+    expect(page).to have_content("$1.50")
+  end
 end
